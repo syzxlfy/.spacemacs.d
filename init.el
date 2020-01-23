@@ -1,12 +1,13 @@
 ;;
 ;;==========================================================================================
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 DELL790-LFY 修改--最后修改时间为：2020年01月23日 14时57分15秒>
+;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月23日 16时53分20秒>
 ;;==========================================================================================
 ;;
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
+
 
 (defun dotspacemacs/layers ()
   "Layer configuration:
@@ -55,15 +56,15 @@ This function should only modify configuration layer settings."
      org
      ;; (shell :variables
      ;;        shell-default-height 30
-     ;;        ;;shell-default-shell 'eshell
      ;;        shell-default-position 'bottom)
      spell-checking
      syntax-checking
      ;; version-control
      ;;gtd
      html
+     (latex :variables latex-build-command "XeLaTeX") ;;设置xelatex为输出TEX、PDF等的默认编译器；
 
-     )
+    )
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -77,6 +78,8 @@ This function should only modify configuration layer settings."
                                       youdao-dictionary
                                       ;;editorconfig
                                       ;;org-download
+                                      ;;atom-one-dark-theme
+
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -85,7 +88,7 @@ This function should only modify configuration layer settings."
 
    ;; A list of packages that will not be installed and loaded.
    ;; 列表中的包将不会安装和加载
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '() ;;'(spaceline)
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -203,7 +206,9 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(
+                         ;; atom-one-dark
+                         spacemacs-dark
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -324,7 +329,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t ;;nil
+   dotspacemacs-maximized-at-startup t
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
@@ -444,6 +449,7 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-pretty-docs nil))
 
+
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
 This function defines the environment variables for your Emacs session. By
@@ -463,16 +469,16 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
 
   ;; 设定配置层压缩包网站，从哪个地方下载
-  ;;ELPA中国镜像https://elpa.emacs-china.org/
-  (setq-default configuration-layer-elpa-archives
-                '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-                  ("org-cn"   . "http://elpa.emacs-china.org/org/")
-                  ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")
-                  ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
-                  ("melpa-stable" . "http://stable.melpa.org/packages/")
-                  ("SC" . "http://elpa.emacs-china.org/sunrise-commander/")
-                  ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
-                  ("user42" . "http://elpa.emacs-china.org/user42/")))
+  ;;ELPA中国镜像  https://elpa.emacs-china.org/
+  ;; (setq-default configuration-layer-elpa-archives
+  ;;               '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+  ;;                 ("org-cn"   . "http://elpa.emacs-china.org/org/")
+  ;;                 ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")
+  ;;                 ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
+  ;;                 ("melpa-stable" . "http://stable.melpa.org/packages/")
+  ;;                 ("SC" . "http://elpa.emacs-china.org/sunrise-commander/")
+  ;;                 ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+  ;;                 ("user42" . "http://elpa.emacs-china.org/user42/")))
   ;;ELPA镜像
   ;;(setq-default configuration-layer-elpa-archives
   ;;              '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -480,21 +486,24 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;;                 ("melpa" . "http://melpa.org/packages/")
   ;;                 ("melpa-stable" . "http://stable.melpa.org/packages/")))
   ;;ELPA清华镜像
-  ;; (setq-default configuration-layer-elpa-archives
-  ;;              '(("melpa-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-  ;;                 ("gnu-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-  ;;                 ("org-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+  (setq-default configuration-layer-elpa-archives
+               '(("melpa-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                  ("gnu-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                  ("org-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
   ;; 设置程序启动时界面，显示菜单及工具栏
   (menu-bar-mode t);;菜单菜单显示
   (tool-bar-mode t);;工具栏显示
 
   ;; 使用aspell代替ispell进行英文拼写检查（Aspell使用mysys中的）
-  (add-to-list 'exec-path "d:/msys64/usr/bin/")
+  (add-to-list 'exec-path "i:/msys64/usr/bin/")
   (setq ispell-program-name "aspell")
   (setq-default ispell-program-name "aspell")
   ;; use American English as ispell default dictionary
   (ispell-change-dictionary "american" t)
+
+  ;;添加搜索工具ag路径
+  (add-to-list 'exec-path "I:/msys64/mingw64/bin")
   )
 
 (defun dotspacemacs/user-load ()
@@ -512,14 +521,13 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   ;; 自己的配置
   ;; Drag-and-drop to `dired`
- ;; (add-hook 'dired-mode-hook 'org-download-enable)
-
+  ;;(add-hook 'dired-mode-hook 'org-download-enable)
 
   ;;2017年8月3日
   ;;在 spacemacs 启动时显示当前路径的文件夹视图，需要修改 .spacemacs 配置文件中的 dotspacemacs/user-config 函数。
   ;;以下即为加入的内容（neotree-show)
   ;; (neotree-show);;前面已有启用
-  (global-set-key [f9] 'neotree-toggle)
+  (global-set-key [f7] 'neotree-toggle)
 
   ;; 保存时自动删除行尾空格及文件结尾空行
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -596,6 +604,7 @@ before packages are loaded."
   ;;Install youdao-dictionary from MELPA with:（手动安装youdao-dictionary）
   ;;M-x package-install RET youdao-dictionary RET
   ;;此处未使用这种方法
+
   ;; Enable Cache
   (setq url-automatic-caching t)
   ;;Key binding
@@ -624,6 +633,40 @@ before packages are loaded."
   (add-to-list 'load-path "~/.emacs.d/addons/cal-china-x-master")
   (require 'cal-china-x)
   ;; (setq mark-holidays-in-calendar t) ;;在显示日历时标出节假日(好像不起作用)
+
+;;Spacemacs下安装配置latex+cdlatex
+;;前段时间用vim+latexsuite写了点笔记，觉得挺顺手，编辑功能强大，且比逐字输入错误少了很多．美中不足的是缺少预览功能，加上比较流行的org，便考虑转向Emacs，采用了配置文件spacemacs．
+;; 介绍spacemacs下安装latex+cdlatex的文章真的太少了，走了一些弯路（主要是将xelatex设置为默认编译器和calatex自动启动），因此记下笔记，供感兴趣的朋友参考．
+;; 一、安装
+;; 1，在 dotspacemacs-configuration-layers 里面加入一行
+;; (latex :variables latex-build-command "XeLaTeX") ；；设置xelatex为默认编译器；
+;; 2，M-x package-install RET cdlatex RET
+;; 二、配置
+;; 在dotspacemacs/user-config 里面加入
+;;  (defun my-LaTeX-mode()
+;;     (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+;;     (setq TeX-command-default "XeLaTeX") ;; 本着能用即可的态度，我没有验证这两行是不是多余
+;;     (setq TeX-save-query  nil )
+;;     (setq TeX-show-compilation t)
+  ;;     (add-to-list 'TeX-view-program-list '("SumatraPDF" "SumatraPDF %o"))
+  ;;     (setq TeX-view-program-selection '((output-pdf "SumatraPDF")))
+  ;;设置SumatraPDF为缺省浏览器，简单期间，我下载了绿色版SumatraPDF，并放到了windows目录下
+;;      ;; (cdlatex-mode t) ;; 好像不用这一行即可启用cdlatex-mode
+;;     )
+;;   (add-hook 'LaTeX-mode-hook 'my-LaTeX-mode)
+;;综上，spacemacs的配置已经比较成熟，配置比较简单，其实我上面仍有重复的地方，欢迎指正．关于预览和其他自动补全，
+;; 请参照http://spacemacs.org/layers/+lang/latex/README.html ．
+  (defun my-LaTeX-mode()
+    (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+    (setq TeX-command-default "XeLaTeX") ;; 本着能用即可的态度，我没有验证这两行是不是多余
+    (setq TeX-save-query  nil )
+    (setq TeX-show-compilation t)
+    (add-to-list 'TeX-view-program-list '("FoxitPhantomPDF" "FoxitPhantomPDF %o"))
+;;(setq TeX-view-program-selection '((output-pdf "SumatraPDF"))) ;;设置FoxitPhantomPDF为缺省浏览器，简单期间，我下载了绿色版FoxitPhantomPDF，并放到了windows目录下
+;; (cdlatex-mode t) ;; 好像不用这一行即可启用cdlatex-mode
+    )
+  (add-hook 'LaTeX-mode-hook 'my-LaTeX-mode)
+
 
   ;;打开自已的GTD文件
   ;; I open my gtd file when I hit C-c g ;;
@@ -713,6 +756,11 @@ before packages are loaded."
            "* %?"
            :empty-lines 1)))
 
+  (setq org-todo-keywords
+        '((type "工作(w!)" "学习(s!)" "生活(l!)" "|")
+          (sequence "PENDING(p!)" "TODO(t!)"  "|" "DONE(d!)" "ABORT(a@/!)")
+          ))
+
 
   ;; I use org's tag feature to implement contexts.
   ;; 标签tag设置
@@ -773,6 +821,60 @@ before packages are loaded."
             (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
             ))))
 
+;; (with-eval-after-load 'org
+;;     ;; 设置 todo keywords
+;;     (setq org-todo-keywords
+;;           '((sequence "TODO" "HAND" "|" "DONE")))
+
+;;     ;; 调试好久的颜色，效果超赞！todo keywords 增加背景色
+;;     (setf org-todo-keyword-faces '(("TODO" . (:foreground "white" :background "#95A5A6"   :weight bold))
+;;                                    ("HAND" . (:foreground "white" :background "#2E8B57"  :weight bold))
+;;                                    ("DONE" . (:foreground "white" :background "#3498DB" :weight bold))))
+
+;;     ;; 设置 bullet list
+;;     (setq org-bullets-bullet-list '("☰" "☷" "☯" "☭"))
+
+;;     ;; 打开 org-indent mode
+;;     (setq org-startup-indented t)
+
+;;     (setq org-agenda-include-diary nil)
+;;     (setq org-agenda-files (list  "~/org-notes/gtd.org"
+;;                                   "~/org-notes/gtd.org_archive"))
+
+;;     (setq org-default-notes-file "~/org-notes/gtd.org")
+;;     (setq org-refile-targets '("~/org-notes/gtd.org" :maxlevel . 3))
+;;     )
+
+  ;; 折叠时不再显示「...」
+ ;; (setq org-ellipsis "▼")               ;
+
+  ;; agenda 里面时间块彩色显示
+;; From: https://emacs-china.org/t/org-agenda/8679/3
+;; (defun ljg/org-agenda-time-grid-spacing ()
+;;   "Set different line spacing w.r.t. time duration."
+;;   (save-excursion
+;;     (let* ((background (alist-get 'background-mode (frame-parameters)))
+;;            (background-dark-p (string= background "dark"))
+;;            (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
+;;            pos
+;;            duration)
+;;       (nconc colors colors)
+;;       (goto-char (point-min))
+;;       (while (setq pos (next-single-property-change (point) 'duration))
+;;         (goto-char pos)
+;;         (when (and (not (equal pos (point-at-eol)))
+;;                    (setq duration (org-get-at-bol 'duration)))
+;;           (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
+;;                 (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+;;             (overlay-put ov 'face `(:background ,(car colors)
+;;                                                 :foreground
+;;                                                 ,(if background-dark-p "black" "white")))
+;;             (setq colors (cdr colors))
+;;             (overlay-put ov 'line-height line-height)
+;;             (overlay-put ov 'line-spacing (1- line-height))))))))
+
+;; (add-hook 'org-agenda-finalize-hook #'ljg/org-agenda-time-grid-spacing)
+
   ;; ;;有一种常见的场景为在浏览网页时看到一篇文章一时看不完，要把它记下来之后再看，这个时候需要复制链接，再粘贴到Emacs中，这个过程比较烦人，
   ;;牛人子龙山人为此提供了如下的配置，通过AppleScript，再增加一个相应的Template，可以使新增该Template的任务时自动去Chrome抓取url并粘贴
   ;;在Emacs中，可以说是非常神奇了。
@@ -797,8 +899,168 @@ before packages are loaded."
   ;;                   "copy theResult to the end of links\n"
   ;;                   "return links as string\n"))))
   ;;     (format "%s" result)))
-  )
 
+
+  ;; 手动美化mode-line状态行
+  ;; mode-line-format 这个变量里面的 :eval 会在每次 mode-line 更新的时候都会被调用，所以请不要把耗时的函数调用放在里面，避免 Emacs 变卡，切记！
+  ;; Spacemacs 用户需要尝试，可以把 spaceline 这个 package 先 exclude 掉，然后把下面的配置添加到 user-config 函数里面即可。
+
+  ;; (defun zilongshanren/update-persp-name ()
+  ;;   (when (bound-and-true-p persp-mode)
+  ;;     ;; There are multiple implementations of
+  ;;     ;; persp-mode with different APIs
+  ;;     (progn
+  ;;       (or (not (string= persp-nil-name (safe-persp-name (get-frame-persp))))
+  ;;           "Default")
+  ;;       (let ((name (safe-persp-name (get-frame-persp))))
+  ;;         (propertize (concat "[" name "] ")
+  ;;                     'face 'font-lock-preprocessor-face
+  ;;                     'help-echo "Current Layout name.")))))
+
+  ;; (defun spaceline--unicode-number (str)
+  ;;   "Return a nice unicode representation of a single-digit number STR."
+  ;;   (cond
+  ;;    ((string= "1" str) "➊")
+  ;;    ((string= "2" str) "➋")
+  ;;    ((string= "3" str) "➌")
+  ;;    ((string= "4" str) "➍")
+  ;;    ((string= "5" str) "➎")
+  ;;    ((string= "6" str) "➏")
+  ;;    ((string= "7" str) "➐")
+  ;;    ((string= "8" str) "➑")
+  ;;    ((string= "9" str) "➒")
+  ;;    ((string= "0" str) "➓")))
+
+  ;; (defun window-number-mode-line ()
+  ;;   "The current window number. Requires `window-numbering-mode' to be enabled."
+  ;;   (when (bound-and-true-p window-numbering-mode)
+  ;;     (let* ((num (window-numbering-get-number))
+  ;;            (str (when num (int-to-string num))))
+  ;;       (spaceline--unicode-number str))))
+
+  ;; (defun mode-line-fill (face reserve)
+  ;;   "Return empty space using FACE and leaving RESERVE space on the right."
+  ;;   (unless reserve
+  ;;     (setq reserve 20))
+  ;;   (when (and window-system (eq 'right (get-scroll-bar-mode)))
+  ;;     (setq reserve (- reserve 3)))
+  ;;   (propertize " "
+  ;;               'display `((space :align-to
+  ;;                                 (- (+ right right-fringe right-margin) ,reserve)))
+  ;;               'face face))
+
+  ;; (defun buffer-encoding-abbrev ()
+  ;;   "The line ending convention used in the buffer."
+  ;;   (let ((buf-coding (format "%s" buffer-file-coding-system)))
+  ;;     (if (string-match "\\(dos\\|unix\\|mac\\)" buf-coding)
+  ;;         (match-string 1 buf-coding)
+  ;;       buf-coding)))
+
+  ;; (setq my-flycheck-mode-line
+  ;;       '(:eval
+  ;;         (pcase flycheck-last-status-change
+  ;;           (`not-checked nil)
+  ;;           (`no-checker (propertize " -" 'face 'warning))
+  ;;           (`running (propertize " ✷" 'face 'success))
+  ;;           (`errored (propertize " !" 'face 'error))
+  ;;           (`finished
+  ;;            (let* ((error-counts (flycheck-count-errors flycheck-current-errors))
+  ;;                   (no-errors (cdr (assq 'error error-counts)))
+  ;;                   (no-warnings (cdr (assq 'warning error-counts)))
+  ;;                   (face (cond (no-errors 'error)
+  ;;                               (no-warnings 'warning)
+  ;;                               (t 'success))))
+  ;;              (propertize (format "[%s/%s]" (or no-errors 0) (or no-warnings 0))
+  ;;                          'face face)))
+  ;;           (`interrupted " -")
+  ;;           (`suspicious '(propertize " ?" 'face 'warning)))))
+
+  ;; (setq-default mode-line-format
+  ;;               (list
+  ;;                " %1"
+  ;;                '(:eval (propertize
+  ;;                         (window-number-mode-line)
+  ;;                         'face
+  ;;                         'font-lock-type-face))
+  ;;                " "
+  ;;                '(:eval (zilongshanren/update-persp-name))
+
+  ;;                "%1 "
+  ;;                ;; the buffer name; the file name as a tool tip
+  ;;                '(:eval (propertize "%b " 'face 'font-lock-keyword-face
+  ;;                                    'help-echo (buffer-file-name)))
+
+
+  ;;                " [" ;; insert vs overwrite mode, input-method in a tooltip
+  ;;                '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+  ;;                                    'face 'font-lock-preprocessor-face
+  ;;                                    'help-echo (concat "Buffer is in "
+  ;;                                                       (if overwrite-mode
+  ;;                                                           "overwrite"
+  ;;                                                         "insert") " mode")))
+
+  ;;                ;; was this buffer modified since the last save?
+  ;;                '(:eval (when (buffer-modified-p)
+  ;;                          (concat ","  (propertize "Mod"
+  ;;                                                   'face 'font-lock-warning-face
+  ;;                                                   'help-echo "Buffer has been modified"))))
+
+  ;;                ;; is this buffer read-only?
+  ;;                '(:eval (when buffer-read-only
+  ;;                          (concat ","  (propertize "RO"
+  ;;                                                   'face 'font-lock-type-face
+  ;;                                                   'help-echo "Buffer is read-only"))))
+  ;;                "] "
+
+  ;;                ;; anzu
+  ;;                anzu--mode-line-format
+
+  ;;                ;; relative position, size of file
+  ;;                "["
+  ;;                (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
+  ;;                "/"
+  ;;                (propertize "%I" 'face 'font-lock-constant-face) ;; size
+  ;;                "] "
+
+  ;;                ;; the current major mode for the buffer.
+  ;;                '(:eval (propertize "%m" 'face 'font-lock-string-face
+  ;;                                    'help-echo buffer-file-coding-system))
+
+  ;;                "%1 "
+  ;;                my-flycheck-mode-line
+  ;;                "%1 "
+  ;;                ;; evil state
+  ;;                '(:eval evil-mode-line-tag)
+
+  ;;                ;; minor modes
+  ;;                minor-mode-alist
+  ;;                " "
+  ;;                ;; git info
+  ;;                `(vc-mode vc-mode)
+
+  ;;                " "
+
+  ;;                ;; global-mode-string goes in mode-line-misc-info
+  ;;                mode-line-misc-info
+
+  ;;                (mode-line-fill 'mode-line 20)
+
+  ;;                ;; line and column
+  ;;                "(" ;; '%02' to set to 2 chars at least; prevents flickering
+  ;;                (propertize "%02l" 'face 'font-lock-type-face) ","
+  ;;                (propertize "%02c" 'face 'font-lock-type-face)
+  ;;                ") "
+
+  ;;                '(:eval (buffer-encoding-abbrev))
+  ;;                mode-line-end-spaces
+  ;;                ;; add the time, with the date and the emacs uptime in the tooltip
+  ;;                ;; '(:eval (propertize (format-time-string "%H:%M")
+  ;;                ;;                     'help-echo
+  ;;                ;;                     (concat (format-time-string "%c; ")
+  ;;                ;;                             (emacs-uptime "Uptime:%hh"))))
+  ;;                ))
+
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -814,7 +1076,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help youdao-dictionary yasnippet-snippets ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim move-text magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile company-web company-statistics column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (company-auctex auctex youdao-dictionary yasnippet-snippets ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim move-text magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile company-web company-statistics column-enforce-mode clean-aindent-mode centered-cursor-mode cdlatex auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
