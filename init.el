@@ -1,7 +1,7 @@
 ;;
 ;;==========================================================================================
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月23日 16时53分20秒>
+;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月23日 22时33分25秒>
 ;;==========================================================================================
 ;;
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
@@ -543,7 +543,6 @@ before packages are loaded."
   ;; 1）将 editorconfig 添加到 dotspacemacs-additional-packages。
   ;; 2）将（editorconfig-mode 1）添加到 dotspacemacs/user-config。
   ;;(editorconfig-mode t)
-
 
   ;;逗号后自动加空格
   (global-set-key (kbd ",")
