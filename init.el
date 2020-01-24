@@ -1,7 +1,7 @@
 ;;
 ;;==========================================================================================
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月23日 22时33分25秒>
+;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月24日 08时10分12秒>
 ;;==========================================================================================
 ;;
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
@@ -496,7 +496,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (tool-bar-mode t);;工具栏显示
 
   ;; 使用aspell代替ispell进行英文拼写检查（Aspell使用mysys中的）
-  (add-to-list 'exec-path "i:/msys64/usr/bin/")
+  (add-to-list 'exec-path "I:/msys64/usr/bin/")
   (setq ispell-program-name "aspell")
   (setq-default ispell-program-name "aspell")
   ;; use American English as ispell default dictionary
