@@ -1,7 +1,7 @@
 ;;
 ;;==========================================================================================
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月24日 08时10分12秒>
+;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月28日 18时19分22秒>
 ;;==========================================================================================
 ;;
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
@@ -63,8 +63,11 @@ This function should only modify configuration layer settings."
      ;;gtd
      html
      (latex :variables latex-build-command "XeLaTeX") ;;设置xelatex为输出TEX、PDF等的默认编译器；
+     pandoc
 
-    )
+     (colors :variables colors-enable-nyan-cat-progress-bar t) ;;在状态条上显示彩虹猫进度条
+
+     )
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -403,7 +406,11 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   ;; 持久化 Emacs 服务器，在 Emacs 关闭的时候，服务器不被杀掉。
+   ;; 这种情况下，我们只可以通过以下方式来杀掉服务器了：
+   ;; SPC q q 退出 Emacs 并杀掉服务器，会对已修改的 Buffer 给出保存的提示。
+   ;; SPC q Q 同上，但会丢失所有未保存的修改。
+   dotspacemacs-persistent-server t;;nil
 
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.
@@ -470,15 +477,15 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; 设定配置层压缩包网站，从哪个地方下载
   ;;ELPA中国镜像  https://elpa.emacs-china.org/
-  ;; (setq-default configuration-layer-elpa-archives
-  ;;               '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-  ;;                 ("org-cn"   . "http://elpa.emacs-china.org/org/")
-  ;;                 ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")
-  ;;                 ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
-  ;;                 ("melpa-stable" . "http://stable.melpa.org/packages/")
-  ;;                 ("SC" . "http://elpa.emacs-china.org/sunrise-commander/")
-  ;;                 ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
-  ;;                 ("user42" . "http://elpa.emacs-china.org/user42/")))
+  (setq-default configuration-layer-elpa-archives
+                '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+                  ("org-cn"   . "http://elpa.emacs-china.org/org/")
+                  ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")
+                  ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
+                  ("melpa-stable" . "http://stable.melpa.org/packages/")
+                  ("SC" . "http://elpa.emacs-china.org/sunrise-commander/")
+                  ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+                  ("user42" . "http://elpa.emacs-china.org/user42/")))
   ;;ELPA镜像
   ;;(setq-default configuration-layer-elpa-archives
   ;;              '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -486,10 +493,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;;                 ("melpa" . "http://melpa.org/packages/")
   ;;                 ("melpa-stable" . "http://stable.melpa.org/packages/")))
   ;;ELPA清华镜像
-  (setq-default configuration-layer-elpa-archives
-               '(("melpa-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                  ("gnu-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                  ("org-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+  ;; (setq-default configuration-layer-elpa-archives
+  ;;              '(("melpa-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+  ;;                 ("gnu-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+  ;;                 ("org-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
   ;; 设置程序启动时界面，显示菜单及工具栏
   (menu-bar-mode t);;菜单菜单显示
@@ -537,6 +544,7 @@ before packages are loaded."
   (display-time-mode t)
   ;; 使用24小时制
   (setq display-time-24hr-format t)
+
 
   ;; editorconfig 是在项目存储库中有一个名为 .editorconfig 的文件，这样参与的开发者的编辑和 ide 可以自动调整。
   ;; 有一个 emacs/spacemacs 模式，可以很容易地在以下步骤中进行集成：
@@ -820,6 +828,7 @@ before packages are loaded."
             (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
             ))))
 
+
 ;; (with-eval-after-load 'org
 ;;     ;; 设置 todo keywords
 ;;     (setq org-todo-keywords
@@ -1059,6 +1068,7 @@ before packages are loaded."
   ;;                ;;                             (emacs-uptime "Uptime:%hh"))))
   ;;                ))
 
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -1075,7 +1085,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-auctex auctex youdao-dictionary yasnippet-snippets ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim move-text magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile company-web company-statistics column-enforce-mode clean-aindent-mode centered-cursor-mode cdlatex auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (pyim-wbdict xtide gp-inline pyim pyim-basedict xr pangu-spacing find-by-pinyin-dired chinese-conv ace-pinyin pinyinlib youdao-dictionary yasnippet-snippets ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox pandoc-mode ox-pandoc overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim move-text magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile company-web company-statistics company-auctex column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
