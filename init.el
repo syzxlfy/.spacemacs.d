@@ -1,7 +1,7 @@
 ;;
 ;;==========================================================================================
 ;; 文件名：.Spacemacs
-;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月28日 18时19分22秒>
+;; Time-stamp: <此文件由 LFY_BHF@2019_11_20 修改--最后修改时间为：2020年01月29日 11时59分52秒>
 ;;==========================================================================================
 ;;
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
@@ -51,7 +51,7 @@ This function should only modify configuration layer settings."
      better-defaults
      emacs-lisp
      git
-     ;;markdown
+     markdown
      neotree
      org
      ;; (shell :variables
@@ -66,6 +66,14 @@ This function should only modify configuration layer settings."
      pandoc
 
      (colors :variables colors-enable-nyan-cat-progress-bar t) ;;在状态条上显示彩虹猫进度条
+     (chinese :variables
+              chinese-default-input-method 'wubi
+              chinese-enable-fcitx t
+              chinese-enable-youdao-dict t)
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-clang-support t
+            )
 
      )
 
@@ -78,7 +86,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    ;; 安装另外的包（不在层中的）
    dotspacemacs-additional-packages '(
-                                      youdao-dictionary
+                                      ;;youdao-dictionary
                                       ;;editorconfig
                                       ;;org-download
                                       ;;atom-one-dark-theme
@@ -477,15 +485,15 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
   ;; 设定配置层压缩包网站，从哪个地方下载
   ;;ELPA中国镜像  https://elpa.emacs-china.org/
-  (setq-default configuration-layer-elpa-archives
-                '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-                  ("org-cn"   . "http://elpa.emacs-china.org/org/")
-                  ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")
-                  ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
-                  ("melpa-stable" . "http://stable.melpa.org/packages/")
-                  ("SC" . "http://elpa.emacs-china.org/sunrise-commander/")
-                  ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
-                  ("user42" . "http://elpa.emacs-china.org/user42/")))
+  ;; (setq-default configuration-layer-elpa-archives
+  ;;               '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+  ;;                 ("org-cn"   . "http://elpa.emacs-china.org/org/")
+  ;;                 ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")
+  ;;                 ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
+  ;;                 ("melpa-stable" . "http://stable.melpa.org/packages/")
+  ;;                 ("SC" . "http://elpa.emacs-china.org/sunrise-commander/")
+  ;;                 ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+  ;;                 ("user42" . "http://elpa.emacs-china.org/user42/")))
   ;;ELPA镜像
   ;;(setq-default configuration-layer-elpa-archives
   ;;              '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -493,10 +501,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;;                 ("melpa" . "http://melpa.org/packages/")
   ;;                 ("melpa-stable" . "http://stable.melpa.org/packages/")))
   ;;ELPA清华镜像
-  ;; (setq-default configuration-layer-elpa-archives
-  ;;              '(("melpa-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-  ;;                 ("gnu-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-  ;;                 ("org-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+  (setq-default configuration-layer-elpa-archives
+               '(("melpa-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                  ("gnu-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                  ("org-cn" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
   ;; 设置程序启动时界面，显示菜单及工具栏
   (menu-bar-mode t);;菜单菜单显示
@@ -577,7 +585,6 @@ before packages are loaded."
         "此文件由 %:u 修改--最后修改时间为：%04y年%02m月%02d日 %02H时%02M分%02S秒"
         time-stamp-active t
         time-stamp-warn-inactive t)
-
 
   ;; 设置友道翻译(2020年1月9日)，（使用时将光标放在需翻译的词（english)或汉语句开头位置，然后按快捷键C-c y, 会在回显栏显示结果。）
   (defvar base-youdao-url "http://fanyi.youdao.com/openapi.do?keyfrom=emacs-yd-pub&key=527593631&type=data&doctype=json&version=1.1&q=")
@@ -1085,7 +1092,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (pyim-wbdict xtide gp-inline pyim pyim-basedict xr pangu-spacing find-by-pinyin-dired chinese-conv ace-pinyin pinyinlib youdao-dictionary yasnippet-snippets ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox pandoc-mode ox-pandoc overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim move-text magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile company-web company-statistics company-auctex column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (pangu-spacing mmm-mode markdown-toc markdown-mode helm-rtags google-c-style gh-md flycheck-rtags find-by-pinyin-dired fcitx disaster company-rtags rtags company-c-headers clang-format chinese-wbim chinese-conv ace-pinyin pinyinlib youdao-dictionary yasnippet-snippets ws-butler winum which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org tagedit symon string-inflection spaceline-all-the-icons smeargle slim-mode scss-mode sass-mode restart-emacs rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode prettier-js popwin persp-mode pcre2el password-generator paradox pandoc-mode ox-pandoc overseer orgit org-projectile org-present org-pomodoro org-mime org-download org-bullets org-brain open-junk-file neotree nameless mwim move-text magit-svn magit-gitflow macrostep lorem-ipsum link-hint indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emmet-mode elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish define-word counsel-projectile company-web company-statistics company-auctex column-enforce-mode color-identifiers-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
